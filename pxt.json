@@ -1,0 +1,48 @@
+{
+    "name": "Backrooms (Proyecto mamadas Terminado)",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "pxt-raycasting": "github:aqeeaqee/pxt-raycasting#v0.3.18",
+        "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.2.0",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "4.0.14",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj",
+    "assetPack": false,
+    "palette": [
+        "#000000",
+        "#E0E0E0",
+        "#8B261E",
+        "#8C6B4A",
+        "#B89F3A",
+        "#F2D648",
+        "#D3D3D3",
+        "#78DC52",
+        "#A6A6A6",
+        "#1A4323",
+        "#707070",
+        "#A4839F",
+        "#7A6F41",
+        "#D9D2B1",
+        "#91463d",
+        "#000000"
+    ]
+}
