@@ -1,13 +1,9 @@
 namespace SpriteKind {
     export const Puerta = SpriteKind.create()
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Render.moveWithController(3, 3, 0)
-})
-controller.A.onEvent(ControllerButtonEvent.Released, function () {
-    Render.moveWithController(2, 3, 0)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Puerta, function (sprite, otherSprite) {
+    statusba.value = 0
+    statusba.setColor(15, 15, 15)
     scene.setBackgroundImage(img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -136,6 +132,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Puerta, function (sprite, otherS
     game.gameOver(true)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    statusba.value = 0
+    statusba.setColor(15, 15, 15)
     scene.setBackgroundImage(img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -265,10 +263,18 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let myEnememy: Sprite = null
 let mySprite2: Sprite = null
+let statusba: StatusBarSprite = null
 game.showLongText("ESPACIO=SALTAR TEXTO", DialogLayout.Full)
 game.showLongText("Estas en los backrooms tienes que escapar mientras persiguen monstruos suerte", DialogLayout.Full)
 game.showLongText("Con la A (Espacio) corres y con la B . . . literalmente nada, intenta simplementwe no bugear todo", DialogLayout.Full)
 game.showLongText("Te mueves con W A S D ya es todo bye", DialogLayout.Full)
+let statusbarborde = statusbars.create(52, 10, StatusBarKind.Energy)
+statusbarborde.setColor(15, 15, 15)
+statusbarborde.setPosition(30, 110)
+statusba = statusbars.create(50, 8, StatusBarKind.Health)
+statusba.setPosition(30, 110)
+statusba.max = 50
+statusba.setColor(5, 15, 3)
 let mySprite = Render.getRenderSpriteVariable()
 Render.moveWithController(2, 3, 0)
 tiles.setCurrentTilemap(tilemap`Backrooms`)
@@ -464,3 +470,21 @@ for (let index = 0; index < 8; index++) {
 }
 Render.setAttribute(Render.attribute.wallZScale, 1.4)
 Render.setSpriteAttribute(mySprite, RCSpriteAttribute.ZOffset, 3)
+game.onUpdate(function () {
+    if (controller.A.isPressed()) {
+        if (statusba.value > 0) {
+            statusba.value = statusba.value - 0.5
+            Render.moveWithController(3, 3, 0)
+        } else if (statusba.value == 0) {
+            Render.moveWithController(2, 3, 0)
+        }
+    } else if (statusba.value == 0) {
+        Render.moveWithController(2, 3, 0)
+        timer.after(3000, function () {
+            statusba.value = statusba.value + 0.2
+        })
+    } else {
+        Render.moveWithController(2, 3, 0)
+        statusba.value = statusba.value + 0.2
+    }
+})
